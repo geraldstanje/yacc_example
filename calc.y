@@ -15,7 +15,6 @@ extern int yyparse(void);
 %union {
 	int ival;	/* NUMBER */
 	int opval;	/* ADDOP MULOP */
-	//Tree *tval;
   std::shared_ptr<Tree> tval;
 }
 
@@ -37,13 +36,13 @@ expr_list
 
 expr 
 	: expr ADDOP expr 
-		{ $$ = std::make_shared<decltype($$)>(new Tree(Token(ADDOP,$2),$1,$3)); }
+		{ $$ = std::make_shared<Tree>(Token(ADDOP,$2),$1,$3); }
 	| expr MULOP expr 
-		{ $$ = std::make_shared<decltype($$)>(new Tree(Token(MULOP,$2),$1,$3)); }
+		{ $$ = std::make_shared<Tree>(Token(MULOP,$2),$1,$3); }
 	| '(' expr ')'
 		{ $$ = $2; }
 	| NUMBER
-		{ $$ = std::make_shared<decltype($$)>(new Tree(Token(NUMBER,$1),nullptr,nullptr)); }
+		{ $$ = std::make_shared<Tree>(Token(NUMBER,$1),nullptr,nullptr); }
 	;
 
 %%
